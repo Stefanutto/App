@@ -1,0 +1,49 @@
+﻿
+@model EF.Domain.Filme
+@{
+    ViewData["Title"] = "Cadastar Filme";
+}
+<div class="row">
+    <div>
+        <h1 class="text-center">Cadastar Filme</h1>
+    </div>
+
+    <div class="col-md-8 col-md-offset-2">
+
+        @using (Html.BeginForm("Add", "Filmes", FormMethod.Post))
+        {
+            @Html.TextBoxFor(b => b.Id, new { @class = "form-control", placeholder = "Informe o nome do filme.", @type = "hidden" })
+            <div class="form-group">
+                <label>Nome</label>
+                @Html.TextBoxFor(b => b.Nome, new { @class = "form-control", placeholder = "Informe o nome do filme." })
+            </div>
+            <div class="form-group">
+                <label>Genero</label>
+                @Html.DropDownListFor(b => b.GeneroId, new SelectList(new GeneroModel().FindAllGenero(), "Id", "Nome", new GeneroModel().FindAllGenero()), "", new { @class = "form-control" })
+            </div>
+
+            <div class="form-group  text-right">
+                <label for="Ativo">Inativo</label>
+                @Html.CheckBoxFor(b => b.Ativo, new { })
+            </div>
+
+
+            @if ((ViewBag.Message as string).Length > 0 || ViewBag.AlertColor != null)
+            {
+                <div class="alert @ViewBag.AlertColor" role="alert">
+                    @ViewBag.Message
+                </div>
+
+            }
+
+
+            <div class="col-md-6">
+                <button type="submit" class="btn btn-primary btn-lg btn-block">Cadastrar</button>
+            </div>
+            <div class="col-md-6">
+                @Html.ActionLink("Voltar", "Index", "Filmes", "", new { @class = "btn btn-default btn-lg btn-block" })
+            </div>
+
+        }
+    </div>
+</div>

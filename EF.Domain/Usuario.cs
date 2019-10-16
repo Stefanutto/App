@@ -24,7 +24,7 @@ namespace EF.Domain
                 return "O usuário deve ter pelo menos 3 caracteres";
 
             if(this.Passwd == null || this.Passwd.Length < 6)
-                return "A senha deve ter pelo menos 6 caracteres; </li>";
+                return "A senha deve ter pelo menos 6 caracteres;";
 
             if(this.RePasswd == null || this.Passwd == null || this.Passwd != this.RePasswd)
                 return "A senha e a confirmação de senha deve ser iguais";
