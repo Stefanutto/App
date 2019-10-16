@@ -1,0 +1,52 @@
+﻿@model EF.Domain.Usuario
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+<div class="row">
+    <div>
+        <h1 class="text-center">Login</h1>
+    </div>
+
+    <div class="col-md-8 col-md-offset-2">
+
+        @using (Html.BeginForm("Singup", "Login", FormMethod.Post))
+        {
+            <div class="form-group">
+                <label for="exampleInputEmail1">Usuário</label>
+                @Html.TextBoxFor(b => b.User, new { @class = "form-control", placeholder = "Usuário" })
+            </div>
+            <div class="form-group">
+                <label for="exampleInputEmail1">Senha</label>
+                @Html.TextBoxFor(b => b.Passwd, new { @class = "form-control", placeholder = "Digite sua senha", @type = "password" })
+            </div>
+
+            <div class="form-group">
+                <label for="exampleInputPassword1">Confirmar</label>
+                @Html.TextBoxFor(b => b.RePasswd, new { @class = "form-control", placeholder = "Redigite sua senha", @type = "password" })
+            </div>
+
+            <div class="row form-group">
+                <div class="col-md-offset-6 col-md-6 text-right">
+                    Já tem uma conta? @Html.ActionLink("Faça login em vez disso.", "Index")
+                </div>
+            </div>
+
+            @if ((ViewBag.Message as string).Length > 0 || ViewBag.AlertColor != null )
+            {
+                <div class="alert @ViewBag.AlertColor" role="alert">
+                    @ViewBag.Message <br>
+                    @if (ViewBag.AlertColor == "alert-success")
+                    {
+                        @Html.ActionLink("Faça o login.", "Index")
+                    }
+                </div>
+            }
+
+
+
+            <button type="submit" class="btn btn-primary btn-lg btn-block">Cadastrar</button>
+        }
+    </div>
+</div>

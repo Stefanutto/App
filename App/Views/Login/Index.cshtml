@@ -1,19 +1,19 @@
 ﻿@model EF.Domain.Usuario
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Acessar o App";
 }
 
 
 <div class="row">
     <div>
-        <h1 class="text-center">Login</h1>
+        <h1 class="text-center">Acessar</h1>
     </div>
 
     <div class="col-md-8 col-md-offset-2">
 
-        @using (Html.BeginForm("Add", "Login", FormMethod.Post))
+        @using (Html.BeginForm("Index", "Login", FormMethod.Post))
         {
-            @Html.ValidationSummary()
+
             <div class="form-group">
                 <label for="exampleInputEmail1">Usuário</label>
                 @Html.TextBoxFor(b => b.User, new { @class = "form-control", placeholder = "Usuário" })
@@ -22,13 +22,20 @@
                 <label for="exampleInputEmail1">Senha</label>
                 @Html.TextBoxFor(b => b.Passwd, new { @class = "form-control", placeholder = "Digite sua senha", @type = "password" })
             </div>
-
-            <div class="form-group">
-                <label for="exampleInputPassword1">Confirmar</label>
-                @Html.TextBoxFor(b => b.RePasswd, new { @class = "form-control", placeholder = "Redigite sua senha", @type = "password" })
+            <div class="row form-group">
+                <div class="col-md-offset-6 col-md-6 text-right">
+                    Não tem uma conta? @Html.ActionLink("Crie uma!", "Singup")
+                </div>
             </div>
 
-            <button type="submit" class="btn btn-primary btn-lg btn-block">Cadastrar</button>
+            @if ((ViewBag.Message as string).Length > 0)
+            {
+                <div class="alert alert-warning" role="alert">
+                    @ViewBag.Message
+                </div>
+            }
+
+            <button type="submit" class="btn btn-primary btn-lg btn-block">Entrar</button>
         }
     </div>
 </div>

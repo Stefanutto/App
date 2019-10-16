@@ -33,11 +33,6 @@ namespace App
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            //Referencia do Context que está em EF.Repository e passo a String de conexão
-            services.AddDbContext<LocadoraContext>(Option => {
-                Option.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
-            });
-
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
