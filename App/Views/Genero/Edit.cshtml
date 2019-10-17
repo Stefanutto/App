@@ -1,26 +1,22 @@
-﻿@model EF.Domain.Filme
+﻿@model EF.Domain.Genero
 @{
-    ViewData["Title"] = "Editar Filmes";
+    ViewData["Title"] = "Editar Genero";
 }
 
 
 <div class="row">
     <div>
-        <h1 class="text-center">Editar Filme</h1>
+        <h1 class="text-center">Editar Genero</h1>
     </div>
 
     <div class="col-md-8 col-md-offset-2">
 
-        @using (Html.BeginForm("Add", "Filmes", FormMethod.Post))
+        @using (Html.BeginForm("Add", "Genero", FormMethod.Post))
         {
-            @Html.TextBoxFor(b => b.Id, new { @class = "form-control", placeholder = "Informe o nome do filme.", @type= "hidden" })
+            @Html.TextBoxFor(b => b.Id, new { @class = "form-control", placeholder = "Informe o nome do filme.", @type = "hidden" })
             <div class="form-group">
                 <label>Nome</label>
                 @Html.TextBoxFor(b => b.Nome, new { @class = "form-control", placeholder = "Informe o nome do filme." })
-            </div>
-            <div class="form-group">
-                <label>Genero</label>
-                @Html.DropDownListFor(b => b.GeneroId, new SelectList(new GeneroModel().FindAllGenero(), "Id", "Nome", new GeneroModel().FindAllGenero()), "", new { @class = "form-control" })
             </div>
 
             <div class="form-group  text-right">

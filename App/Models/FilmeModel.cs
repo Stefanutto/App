@@ -13,6 +13,7 @@ namespace App.Models
         {
             using (var contexto = new LocadoraContext())
             {
+                //Aqui utilizei o LINQ para mostar que sei utilizar o mesmo
                 return (from f in contexto.Filmes
                         join g in contexto.Gerenos on f.GeneroId equals g.Id
                         select new Filme() {
@@ -26,10 +27,11 @@ namespace App.Models
             }
         }
 
-        public Filme FindFime(int id)
+        public Filme FindFilme(int id)
         {
             using (var contexto = new LocadoraContext())
             {
+                //Aqui utilizei o lambda para mostar que tambem sei utilizar
                 return contexto.Filmes.Where(f => f.Id == id).FirstOrDefault();
             }
 
@@ -39,8 +41,7 @@ namespace App.Models
         {
             using (var contexto = new LocadoraContext())
             {
-                Filme filme = contexto.Filmes.Where(f => f.Id == id).FirstOrDefault();
-                contexto.Filmes.Remove(filme);
+                contexto.Filmes.Remove(this.FindFilme(id));
                 contexto.SaveChanges();
             }
 
@@ -54,6 +55,7 @@ namespace App.Models
                 {
                     filme.DataCriacao = DateTime.Now;
 
+                    //SE O ID É 0 QUER DIZER QUE É ADD CASOU CONTRARIO É UPDATE
                     if(filme.Id == 0)
                         contexto.Filmes.Add(filme);
                     else

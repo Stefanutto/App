@@ -1,16 +1,16 @@
-﻿@model EF.Domain.Filme
+﻿@model EF.Domain.BigDomain
 @{
     ViewData["Title"] = "Index";
 }
 
 <div>
-
+    <button type="button" onclick="MultDelete()" class="btn btn-primary btn-sm">Deletar Selecionados</button>
+    <hr>
     <!-- Nav tabs -->
     <ul class="nav nav-tabs" role="tablist">
-        <li role="presentation" class="active"><a href="#Filmes" aria-controls="home" role="tab" data-toggle="tab">Filmes</a></li>
-        <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Profile</a></li>
-        <li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">Messages</a></li>
-        <li role="presentation"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">Settings</a></li>
+        <li role="presentation" class="active"><a href="#Filmes" aria-controls="Filmes" role="tab" data-toggle="tab">Filmes</a></li>
+        <li role="presentation"><a href="#Genero" aria-controls="Genero" role="tab" data-toggle="tab">Gênero</a></li>
+        <li role="presentation"><a href="#Locacao" aria-controls="Locacao" role="tab" data-toggle="tab">Locação</a></li>
     </ul>
 
     <!-- Tab panes -->
@@ -19,7 +19,6 @@
             <br />
             <div>
                 @Html.ActionLink("Cadastrar Filme", "Add", "Filmes", new object { }, new { @class = "btn btn-primary btn-sm" })
-                <button type="button" class="btn btn-primary btn-sm">Deletar Selecionados</button>
             </div>
             <hr>
             <div class="table-responsive">
@@ -28,11 +27,11 @@
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th>@Html.DisplayNameFor(n => n.Id)</th>
+                            <th>id</th>
                             <th>Nome</th>
                             <th>Data Cadastro</th>
                             <th>Genero</th>
-                            <th>Inativo</th>
+                            <th>Ativo</th>
                             <th>Ações</th>
                         </tr>
                     </thead>
@@ -41,7 +40,7 @@
                         {
                             <tr>
                                 <td>
-                                    <input type="checkbox" id="@Html.DisplayFor(i => item.Id)" name="ChkSelect">
+                                    <input type="checkbox" id="@Html.DisplayFor(i => item.Id)" name="ChkSelect" data-type="Filmes">
                                 </td>
                                 <td>@Html.DisplayFor(i => item.Id)</td>
                                 <td>@Html.DisplayFor(i => item.Nome)</td>
@@ -49,10 +48,10 @@
                                 <td>@Html.DisplayFor(i => item.Genero.Nome)</td>
                                 <td>@Html.DisplayFor(i => item.Ativo)</td>
                                 <td>
-                                    <a href= "/Filmes/Edit/@Html.DisplayFor(i => item.Id)" type="button" class="btn btn-primary btn-xs" data-toggle="tooltip" title="Editar!">
+                                    <a href="/Filmes/Edit/@Html.DisplayFor(i => item.Id)" type="button" class="btn btn-primary btn-xs" data-toggle="tooltip" title="Editar!">
                                         <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                                     </a>
-                                    <a href= "/Filmes/Delete/@Html.DisplayFor(i => item.Id)" type="button" class="btn btn-danger btn-xs" data-toggle="tooltip" title="Deletar!">
+                                    <a href="/Filmes/Delete/@Html.DisplayFor(i => item.Id)" type="button" class="btn btn-danger btn-xs" data-toggle="tooltip" title="Deletar!">
                                         <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
                                     </a>
                                 </td>
@@ -61,11 +60,134 @@
                     </tbody>
                 </table>
                 <!--FIM TABELA DE FILMES-->
+                <div id="Mensagem"></div>
             </div>
         </div>
-        <div role="tabpanel" class="tab-pane" id="profile">...</div>
-        <div role="tabpanel" class="tab-pane" id="messages">...</div>
-        <div role="tabpanel" class="tab-pane" id="settings">...</div>
+        <div role="tabpanel" class="tab-pane" id="Genero">
+            <br />
+            <div>
+                @Html.ActionLink("Cadastrar Genero", "Add", "Genero", new object { }, new { @class = "btn btn-primary btn-sm" })
+            </div>
+            <hr>
+            <div class="table-responsive">
+                <!--INICIO TABELA DE FILMES-->
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>id</th>
+                            <th>Nome</th>
+                            <th>Data Cadastro</th>
+                            <th>Ativo</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in new GeneroModel().FindAllGenero())
+                        {
+                            <tr>
+                                <td>
+                                    <input type="checkbox" id="@Html.DisplayFor(i => item.Id)" name="ChkSelect"  data-type="Genero">
+                                </td>
+                                <td>@Html.DisplayFor(i => item.Id)</td>
+                                <td>@Html.DisplayFor(i => item.Nome)</td>
+                                <td>@Html.DisplayFor(i => item.DataCriacao)</td>
+                                <td>@Html.DisplayFor(i => item.Ativo)</td>
+                                <td>
+                                    <a href="/Genero/Edit/@Html.DisplayFor(i => item.Id)" type="button" class="btn btn-primary btn-xs" data-toggle="tooltip" title="Editar!">
+                                        <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                                    </a>
+                                    <a href="/Genero/Delete/@Html.DisplayFor(i => item.Id)" type="button" class="btn btn-danger btn-xs" data-toggle="tooltip" title="Deletar!">
+                                        <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                <div id="Mensagem"></div>
+            </div>
+        </div>
+        <div role="tabpanel" class="tab-pane" id="Locacao">
+            <br />
+            <div>
+                @Html.ActionLink("Cadastrar Locação", "Add", "Locacao", new object { }, new { @class = "btn btn-primary btn-sm" })
+            </div>
+            <hr>
+            <div class="table-responsive">
+                <!--INICIO TABELA DE FILMES-->
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>id</th>
+                            <th>Lista de Filmes</th>
+                            <th>CPF do lacatário</th>
+                            <th>Data de locação</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in new LocacaoModel().FindAllLocacao())
+                        {
+                            <tr>
+                                <td>
+                                    <input type="checkbox" id="@Html.DisplayFor(i => item.Id)" name="ChkSelect" data-type="Locacao">
+                                </td>
+                                <td>@Html.DisplayFor(i => item.Id)</td>
+                                <td>@Html.DisplayFor(i => item.ListaFilmes)</td>
+                                <td>@Html.DisplayFor(i => item.CPF)</td>
+                                <td>@Html.DisplayFor(i => item.DataCriacao)</td>
+                                
+                                <td>
+                                    <a href="/Locacao/Edit/@Html.DisplayFor(i => item.Id)" type="button" class="btn btn-primary btn-xs" data-toggle="tooltip" title="Editar!">
+                                        <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                                    </a>
+                                    <a href="/Locacao/Delete/@Html.DisplayFor(i => item.Id)" type="button" class="btn btn-danger btn-xs" data-toggle="tooltip" title="Deletar!">
+                                        <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                <div id="Mensagem"></div>
+            </div>
+        </div>
     </div>
 
 </div>
+<script>
+    //No desafio não foi solicitado nada de JavaScript por isso tentei fazer o máximo possível sem ele
+    //Porem para fazer a parte de deletar mutiplos achei muito mas muito mais facil utilizando o JavaScript
+    //Por isso essa parte aqui estou utilizando ele.
+    //Obs: Se tive liberdade teria feito a maioria das coisas em JavaScript pois assim não precisa ficar atualizando a pag toda a hora.
+    function MultDelete() {
+        if (confirm('Deseja realmente deletar os selecionados? \n Essa operação não poderá ser desfeita. \n Lembrando que será excluido os itens selecionados de todas as abas ("Filme", "Genero" e "Locação")')) {
+            var ListChk = document.getElementsByName("ChkSelect");
+
+            $("#Mensagem").html("Preparando a exclusão...");
+            ListChk.forEach(e => {
+                if (e.checked == true) {
+                    console.log(e.dataset.type + "/Delete/" + e.id);
+                    $.ajax({
+                        url: "/" + e.dataset.type + "/Delete/" + e.id,
+                        type: 'post',
+                        data: {},
+                        beforeSend: function () {
+                            $("#Mensagem").html("Excluindo...");
+                        }
+                    })
+                        .done(function (e) {
+                            
+                        })
+                        .fail(function (jqXHR, textStatus, e) {
+                            alert(e);
+                        });
+                }
+            })
+
+            location.reload();
+        }
+    }
+</script>

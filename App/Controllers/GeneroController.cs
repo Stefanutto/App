@@ -9,14 +9,21 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace App.Controllers
 {
-    public class FilmesController : Controller
+    public class GeneroController : Controller
     {
-
         public IActionResult Index()
         {
             if (Session.usuario == null) return Redirect("/Login/Index");
-
             return View();
+        }
+
+        public IActionResult Delete(int id)
+        {
+            if (Session.usuario == null) return Redirect("/Login/Index");
+            ViewBag.Message = "";
+            new GeneroModel().DeleteGenero(id);
+
+            return Redirect("/Filmes/Index");
         }
 
         public IActionResult Add()
@@ -27,7 +34,7 @@ namespace App.Controllers
         }
 
         [HttpPost]
-        public IActionResult Add(Filme filme)
+        public IActionResult Add(Genero genero)
         {
             if (Session.usuario == null) return Redirect("/Login/Index");
             ViewBag.Message = "";
@@ -36,16 +43,16 @@ namespace App.Controllers
             ViewBag.AlertColor = "alert-warning";
 
             //Vou na class do filme para validar os campos digitados.
-            ViewBag.Message = filme.ValidatingFields();
+            ViewBag.Message = genero.ValidatingFields();
 
             //Verifico se existem erros nos campos digitados.
-            if (!filme.ErrorValidatingFields)
+            if (!genero.ErrorValidatingFields)
             {
                 //Insert no usuario
-                if (new FilmeModel().InsertOrUpdateFilme(filme))
+                if (new GeneroModel().InsertOrUpdateGenero(genero))
                 {
                     ViewBag.AlertColor = "alert-success";
-                    ViewBag.Message = "Filme cadastrado com sucesso";
+                    ViewBag.Message = "Genero cadastrado com sucesso";
                     return View(null);
                     //return Redirect("/Filmes/Edit/" + filme.Id);
                 }
@@ -54,8 +61,7 @@ namespace App.Controllers
                     ViewBag.Message = "Erro.";
                 }
             }
-            return View(filme);
-
+            return View(genero);
         }
 
         public IActionResult Edit(int id)
@@ -64,16 +70,7 @@ namespace App.Controllers
             ViewBag.Message = "";
             ViewBag.id = id;
 
-            return View(new FilmeModel().FindFilme(id));
-        }
-
-        public IActionResult Delete(int id)
-        {
-            if (Session.usuario == null) return Redirect("/Login/Index");
-            ViewBag.Message = "";
-            new FilmeModel().DeleteFilme(id);
-
-            return Redirect("/Filmes/Index");
+            return View(new GeneroModel().FindGenero(id));
         }
     }
 }

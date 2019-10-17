@@ -36,5 +36,10 @@ namespace EF.Domain
 
             return "O " + msg + " foi realizado com sucesso.";
         }
+
+        public override string ToString()
+        {
+            return this.Nome.ToString();
+        }
     }
 }
