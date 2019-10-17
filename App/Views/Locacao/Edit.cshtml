@@ -1,6 +1,6 @@
-﻿@model EF.Domain.Genero
+﻿@model EF.Domain.Locacao
 @{
-    ViewData["Title"] = "Editar Genero";
+    ViewData["Title"] = "Editar Locação";
 }
 
 
@@ -11,19 +11,13 @@
 
     <div class="col-md-8 col-md-offset-2">
 
-        @using (Html.BeginForm("Add", "Genero", FormMethod.Post))
+        @using (Html.BeginForm("Add", "Locacao", FormMethod.Post))
         {
-            @Html.TextBoxFor(b => b.Id, new { @class = "form-control", placeholder = "Informe o nome do genero.", @type = "hidden" })
+            @Html.TextBoxFor(b => b.Id, new { @class = "form-control", placeholder = "Informe o nome do filme.", @type = "hidden" })
             <div class="form-group">
                 <label>Nome</label>
-                @Html.TextBoxFor(b => b.Nome, new { @class = "form-control", placeholder = "Informe o nome do genero." })
+                @Html.TextBoxFor(b => b.CPF, new { @class = "form-control", placeholder = "Informe o nome do filme." })
             </div>
-
-            <div class="form-group  text-right">
-                <label for="Ativo">Inativo</label>
-                @Html.CheckBoxFor(b => b.Ativo, new { })
-            </div>
-
 
             @if ((ViewBag.Message as string).Length > 0 || ViewBag.AlertColor != null)
             {
