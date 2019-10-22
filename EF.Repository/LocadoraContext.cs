@@ -16,7 +16,7 @@ namespace EF.Repository
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Password=123123;Persist Security Info=True;User ID=sa;Initial Catalog=locadora;Data Source=AVELL\\LOCADORA");
+            optionsBuilder.UseSqlServer("Password=q1w2e3@@;Persist Security Info=True;User ID=teste;Initial Catalog=locadora;Data Source=locadora.database.windows.net");
         }
     }
 }
